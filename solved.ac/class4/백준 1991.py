@@ -3,31 +3,40 @@ input = sys.stdin.readline
 
 n = int(input())
 
-s = []
+graph = []
+order = []
 
 for i in range(n) :
-    c = input().strip()
-    if c == "all" :
-        s = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-    elif c == "empty" :
-        s = []
-    else :
-        com, x = c.split()
-        if com == "add" :
-            if x not in s :
-                s.append(x)
-        elif com == "remove" :
-            if x in s :
-                s.remove(x)
-        elif com == "check" :
-            # print("////")
-            if x in s :
-                print(1)
-            else :
-                print(0)
-        else :
-            if x in s :
-                s.remove(x)
-            else :
-                s.append(x)
-    # print(s)
+    root, left, right = input().strip().split()
+    order.append(root)
+    graph.append((left, right))
+
+def front_search(start) :
+    print(start, end="")
+    idx = order.index(start)
+    if graph[idx][0] != "." :
+        front_search(graph[idx][0])
+    if graph[idx][1] != "." :
+        front_search(graph[idx][1])
+
+def mid_search(start) :
+    idx = order.index(start)
+    if graph[idx][0] != "." :
+        mid_search(graph[idx][0])
+    print(start, end="")
+    if graph[idx][1] != "." :
+        mid_search(graph[idx][1])
+    
+def back_search(start) :
+    idx = order.index(start)
+    if graph[idx][0] != "." :
+        back_search(graph[idx][0])
+    if graph[idx][1] != "." :
+        back_search(graph[idx][1])
+    print(start, end="")
+
+front_search("A")
+print()
+mid_search("A")
+print()
+back_search("A")
