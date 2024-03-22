@@ -27,8 +27,6 @@ def dfs(now, depth, start) :
 
 for i in range(1, N + 1) :
     visited = [False] * (N + 1)
-    best = 0
-    second = 0
     if len(lst[i]) == 1 :
         dfs(i, 0, i)
 
