@@ -14,7 +14,6 @@ def bellman_ford(graph) :
                 dist[edge[1]] = dist[edge[0]] + edge[2]
                 if i == v - 1 :
                     return True
-        # print(i, dist)
     return False
 
 for t in range(TC) :
@@ -29,10 +28,7 @@ for t in range(TC) :
         graph.append((S, E, -T))
     flag = 0
     dist = [INF] * (N + 1)
-    # print(graph)
     if bellman_ford(graph) :
         print("YES")
     else :
         print("NO")
-    # print("----------------")
-    # print(dist)
