@@ -6,42 +6,41 @@ INF = int(1e9)
 
 proNum = 1
 
-while True:  # 0이면 종료
-    n = int(input())
-    if n <= 0:
-        break
-    nodes = []
-    for i in range(n):
-        nodes.append(list(map(int, input().split())))
-
-    graph = [[] for _ in range(n + 1)]
-    distance = [INF] * (n + 1)
-
-    for i in nodes:
-        # a, b, c = map(int, input().split())
-        graph[a].append((b, c))
-
-
-def dijkstra(start):
+def dijkstra(start_r, start_c, N):
     q = []
-    heapq.heappush(q, (0, start))
-    distance[start] = 0
-
+    heapq.heappush(q, (0, start_r, start_c))
+    distance[start_r][start_c] = 0
+    dr = [0, 0, -1, 1]
+    dc = [-1, 1, 0, 0]
     while q:
-        dist, now = heapq.heappop(q)
-        if distance[now] < dist:
+        dist, now_r, now_c= heapq.heappop(q)
+        if distance[now_r][now_c] < dist:
             continue
-        for i in graph[now]:
-            cost = dist + i[1]
-            if cost < distance[i[0]]:
-                distance[i[0]] = cost
-                heapq.heappush(q, (cost, i[0]))
+        for i in range(4):
+            r = now_r + dr[i]
+            c = now_c + dc[i]
+            if r < 0 or r >= N or c < 0 or c >= N :
+                continue
+            cost = dist + board[r][c]
+            if cost < distance[r][c]:
+                distance[r][c] = cost
+                heapq.heappush(q, (cost, r, c))
 
+cnt = 1
+while True :
+    N = int(input())
+    if N <= 0:
+        break
+    board = []
+    for i in range(N):
+        board.append(list(map(int, input().split())))
 
-dijkstra(start)
+    distance = [[INF] * N for _ in range(N)]
+    dijkstra(0, 0, N)
+    # print("------------")
+    # for d in distance :
+        # print(*d)
 
-for i in range(1, n+1):
-    if distance[i] == INF:
-        print("INF")
-    else:
-        print(distance[i])
+    print("Problem", cnt, end=": ")
+    print(distance[N - 1][N - 1] + board[0][0])
+    cnt += 1
