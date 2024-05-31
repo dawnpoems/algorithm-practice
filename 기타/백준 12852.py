@@ -11,7 +11,6 @@ while queue :
     now = queue.popleft()
     if dp[now[0]] != -1 :
         continue
-    # print(now)
     dp[now[0]] = now[1] 
     if dp[now[0]] == N :
         break
@@ -21,7 +20,6 @@ while queue :
         queue.append((now[0] * 2, now[0]))
     if now[0] + 1 <= N :
         queue.append((now[0] + 1, now[0]))
-    # print(queue)
 
 now = N
 ans = []
