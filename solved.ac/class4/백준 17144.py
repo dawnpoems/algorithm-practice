@@ -82,8 +82,5 @@ while t < T :
     t += 1
 
 print(result)
-ans = 0
-for r in range(R) :
-    ans += sum(result[r])
 
-print(ans)
+print(sum(sum(row) for row in result))
