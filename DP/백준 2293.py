@@ -6,22 +6,18 @@ N, K = map(int, input().split())
 coins = []
 
 dp = [0] * (K + 1)
+dp[0] = 1
 
 for i in range(N) :
-    co = int(input())
-    coins.append(co)
-    dp[co] = 1
-    now = co
+    coin = int(input())
+    coins.append(coin)
     
-coins.sort(reverse=True)
+coins.sort()
 
-print(coins)
-for i in range(1, K + 1) :
-    nums = []
-    for co in coins :
-        if i - co >= 0 and i != co:
-            nums.append(dp[i - co])
-            dp[i] += dp[i - co]
-    print(nums)
+# print(coins)
+for c in coins :
+    for k in range(1, K + 1) :
+        if k - c >= 0 :
+            dp[k] += dp[k - c]
 
-print(dp)
+print(dp[K])
