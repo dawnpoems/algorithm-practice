@@ -1,4 +1,4 @@
-import sys
+import sys, copy
 input = sys.stdin.readline
 
 R, C, T = map(int, input().split())
@@ -12,10 +12,11 @@ for i in range(R) :
 
 def spread() :
     global R, C
-    result = [[0] * C for _ in range(R)]
+    result = copy.deepcopy(board)
     for r in range(R) :
         for c in range(C) :
-            result[r][c] = board[r][c]
+            if board[r][c] <= 0 :
+                continue
             spreaded = board[r][c] // 5
             if r - 1 >= 0 and board[r - 1][c] >= 0 :
                 result[r - 1][c] += spreaded
@@ -44,7 +45,7 @@ def air_purify_up(result) :
         result[r][c] = result[r][c + 1]
         c += 1
     c = C - 1
-    while r + 1 < up_puri :
+    while r + 1 <= up_puri :
         result[r][c] = result[r + 1][c]
         r += 1
     r = up_puri
@@ -76,11 +77,23 @@ def air_purify_down(result) :
 
 t = 0
 while t < T :
-    result = spread()
-    air_purify_up(result)
-    air_purify_down(result)
+    board = spread()
+    # print("------------")
+    # for b in board :
+    #     print(*b)
+    air_purify_up(board)
+    # print("------------")
+    # for b in board :
+    #     print(*b)
+    air_purify_down(board)
+    # print("------------")
+    # for b in board :
+    #     print(*b)
     t += 1
 
-print(result)
+# print("------------")
+# for b in board :
+#     print(*b)
 
-print(sum(sum(row) for row in result))
+
+print(sum(sum(row) for row in board) + 2)
